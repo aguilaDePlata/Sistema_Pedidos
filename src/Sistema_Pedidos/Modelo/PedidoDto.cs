@@ -8,6 +8,11 @@ namespace Sistema_Pedidos
 {
     public class PedidoDto
     {
+        public PedidoDto()
+        {
+            PedidoDetalles = new List<Detalle_PedidoDto>();
+        }
+
         public int Id_Pedido { get; set; }
         public int Id_Cliente { get; set; }
         public int Id_Empleado { get; set; }
@@ -15,5 +20,7 @@ namespace Sistema_Pedidos
         public DateTime Fecha_MaxEntrega { get; set; }
         public decimal Valor_Total { get; set; }
         public Nullable<bool> Activo { get; set; }
+
+        public List<Detalle_PedidoDto> PedidoDetalles { get; set; }       
     }
 }
