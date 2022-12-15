@@ -12,11 +12,7 @@ namespace Sistema_Pedidos
 {
     public partial class frmPedido : Form
     {
-        public frmPedido()
-        {
-            InitializeComponent();
-        }
-
 
     }
 }
+    

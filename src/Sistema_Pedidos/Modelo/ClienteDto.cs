@@ -16,6 +16,8 @@ namespace Sistema_Pedidos
         public string Direccion { get; set; }
         public string Distrito { get; set; }
         public string Telefono { get; set; }
+
+        public string NombreCompleto { get; set; }
         public Nullable<bool> Activo { get; set; }
     }
 }

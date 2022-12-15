@@ -37,7 +37,7 @@ namespace Sistema_Pedidos
             this.dtpFechaEntrega = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaPedido = new System.Windows.Forms.DateTimePicker();
             this.txtNombreCliente = new System.Windows.Forms.TextBox();
-            this.txtIdCliente = new System.Windows.Forms.TextBox();
+            this.txtClienteId = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,12 +48,14 @@ namespace Sistema_Pedidos
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.txtCantidad = new System.Windows.Forms.TextBox();
             this.txtPrecio = new System.Windows.Forms.TextBox();
-            this.txtIdProducto = new System.Windows.Forms.TextBox();
+            this.txtProductoId = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnBuscarCliente = new System.Windows.Forms.Button();
+            this.btnBuscarProducto = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetallePedido)).BeginInit();
@@ -67,6 +69,7 @@ namespace Sistema_Pedidos
             this.btnAgregar.TabIndex = 11;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnCancelar
             // 
@@ -96,10 +99,11 @@ namespace Sistema_Pedidos
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnBuscarCliente);
             this.groupBox1.Controls.Add(this.dtpFechaEntrega);
             this.groupBox1.Controls.Add(this.dtpFechaPedido);
             this.groupBox1.Controls.Add(this.txtNombreCliente);
-            this.groupBox1.Controls.Add(this.txtIdCliente);
+            this.groupBox1.Controls.Add(this.txtClienteId);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
@@ -129,15 +133,16 @@ namespace Sistema_Pedidos
             // 
             this.txtNombreCliente.Location = new System.Drawing.Point(106, 51);
             this.txtNombreCliente.Name = "txtNombreCliente";
+            this.txtNombreCliente.ReadOnly = true;
             this.txtNombreCliente.Size = new System.Drawing.Size(317, 20);
             this.txtNombreCliente.TabIndex = 2;
             // 
-            // txtIdCliente
+            // txtClienteId
             // 
-            this.txtIdCliente.Location = new System.Drawing.Point(106, 21);
-            this.txtIdCliente.Name = "txtIdCliente";
-            this.txtIdCliente.Size = new System.Drawing.Size(100, 20);
-            this.txtIdCliente.TabIndex = 1;
+            this.txtClienteId.Location = new System.Drawing.Point(106, 21);
+            this.txtClienteId.Name = "txtClienteId";
+            this.txtClienteId.Size = new System.Drawing.Size(100, 20);
+            this.txtClienteId.TabIndex = 1;
             // 
             // label2
             // 
@@ -176,12 +181,13 @@ namespace Sistema_Pedidos
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnBuscarProducto);
             this.groupBox2.Controls.Add(this.dgvDetallePedido);
             this.groupBox2.Controls.Add(this.txtProducto);
             this.groupBox2.Controls.Add(this.txtTotal);
             this.groupBox2.Controls.Add(this.txtCantidad);
             this.groupBox2.Controls.Add(this.txtPrecio);
-            this.groupBox2.Controls.Add(this.txtIdProducto);
+            this.groupBox2.Controls.Add(this.txtProductoId);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label8);
@@ -198,22 +204,27 @@ namespace Sistema_Pedidos
             this.dgvDetallePedido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDetallePedido.Location = new System.Drawing.Point(-2, 60);
             this.dgvDetallePedido.Name = "dgvDetallePedido";
+            this.dgvDetallePedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDetallePedido.Size = new System.Drawing.Size(638, 168);
             this.dgvDetallePedido.TabIndex = 9;
             // 
             // txtProducto
             // 
-            this.txtProducto.Location = new System.Drawing.Point(109, 34);
+            this.txtProducto.Location = new System.Drawing.Point(138, 34);
             this.txtProducto.Name = "txtProducto";
-            this.txtProducto.Size = new System.Drawing.Size(314, 20);
+            this.txtProducto.ReadOnly = true;
+            this.txtProducto.Size = new System.Drawing.Size(283, 20);
             this.txtProducto.TabIndex = 6;
             // 
             // txtTotal
             // 
             this.txtTotal.Location = new System.Drawing.Point(535, 234);
             this.txtTotal.Name = "txtTotal";
+            this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(100, 20);
             this.txtTotal.TabIndex = 10;
+            this.txtTotal.Text = "0.00";
+            this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtCantidad
             // 
@@ -221,20 +232,25 @@ namespace Sistema_Pedidos
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(100, 20);
             this.txtCantidad.TabIndex = 8;
+            this.txtCantidad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantidad_KeyPress);
             // 
             // txtPrecio
             // 
             this.txtPrecio.Location = new System.Drawing.Point(427, 34);
             this.txtPrecio.Name = "txtPrecio";
+            this.txtPrecio.ReadOnly = true;
             this.txtPrecio.Size = new System.Drawing.Size(100, 20);
             this.txtPrecio.TabIndex = 7;
+            this.txtPrecio.Text = "0.00";
+            this.txtPrecio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // txtIdProducto
+            // txtProductoId
             // 
-            this.txtIdProducto.Location = new System.Drawing.Point(3, 34);
-            this.txtIdProducto.Name = "txtIdProducto";
-            this.txtIdProducto.Size = new System.Drawing.Size(100, 20);
-            this.txtIdProducto.TabIndex = 5;
+            this.txtProductoId.Location = new System.Drawing.Point(3, 34);
+            this.txtProductoId.Name = "txtProductoId";
+            this.txtProductoId.Size = new System.Drawing.Size(100, 20);
+            this.txtProductoId.TabIndex = 5;
             // 
             // label10
             // 
@@ -266,7 +282,7 @@ namespace Sistema_Pedidos
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(106, 18);
+            this.label7.Location = new System.Drawing.Point(135, 18);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(63, 13);
             this.label7.TabIndex = 8;
@@ -281,6 +297,26 @@ namespace Sistema_Pedidos
             this.label6.TabIndex = 9;
             this.label6.Text = "ID Producto";
             // 
+            // btnBuscarCliente
+            // 
+            this.btnBuscarCliente.Location = new System.Drawing.Point(208, 19);
+            this.btnBuscarCliente.Name = "btnBuscarCliente";
+            this.btnBuscarCliente.Size = new System.Drawing.Size(29, 23);
+            this.btnBuscarCliente.TabIndex = 8;
+            this.btnBuscarCliente.Text = "...";
+            this.btnBuscarCliente.UseVisualStyleBackColor = true;
+            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
+            // 
+            // btnBuscarProducto
+            // 
+            this.btnBuscarProducto.Location = new System.Drawing.Point(103, 32);
+            this.btnBuscarProducto.Name = "btnBuscarProducto";
+            this.btnBuscarProducto.Size = new System.Drawing.Size(29, 23);
+            this.btnBuscarProducto.TabIndex = 8;
+            this.btnBuscarProducto.Text = "...";
+            this.btnBuscarProducto.UseVisualStyleBackColor = true;
+            this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
+            // 
             // frmPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,9 +328,10 @@ namespace Sistema_Pedidos
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAgregar);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmPedido";
             this.Text = "Mantenimiento de Pedido";
+            this.Load += new System.EventHandler(this.frmPedido_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -315,7 +352,7 @@ namespace Sistema_Pedidos
         private System.Windows.Forms.DateTimePicker dtpFechaEntrega;
         private System.Windows.Forms.DateTimePicker dtpFechaPedido;
         private System.Windows.Forms.TextBox txtNombreCliente;
-        private System.Windows.Forms.TextBox txtIdCliente;
+        private System.Windows.Forms.TextBox txtClienteId;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
@@ -326,11 +363,13 @@ namespace Sistema_Pedidos
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.TextBox txtCantidad;
         private System.Windows.Forms.TextBox txtPrecio;
-        private System.Windows.Forms.TextBox txtIdProducto;
+        private System.Windows.Forms.TextBox txtProductoId;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnBuscarCliente;
+        private System.Windows.Forms.Button btnBuscarProducto;
     }
 }
