@@ -81,6 +81,12 @@
     <Compile Include="Vista\FormDetallePedido.Designer.cs">
       <DependentUpon>FormDetallePedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vista\FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vista\FormMarca.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\FormDetallePedido.resx">
       <DependentUpon>FormDetallePedido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vista\FormMarca.resx">
       <DependentUpon>FormMarca.cs</DependentUpon>
