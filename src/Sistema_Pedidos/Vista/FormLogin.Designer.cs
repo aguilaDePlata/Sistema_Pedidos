@@ -75,7 +75,7 @@ namespace Sistema_Pedidos.Vista
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(200, 32);
             this.btnIngresar.TabIndex = 4;
-            this.btnIngresar.Text = "Ingresar";
+            this.btnIngresar.Text = " ";
             this.btnIngresar.UseVisualStyleBackColor = true;
             this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
             // 
