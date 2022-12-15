@@ -326,7 +326,7 @@ namespace Sistema_Pedidos
                 txtEdad.Text = dgvEmpleados.Rows[e.RowIndex].Cells["Edad"].FormattedValue.ToString();
                 txtTelefono.Text = dgvEmpleados.Rows[e.RowIndex].Cells["Telefono"].FormattedValue.ToString();
                 txtIdCargo.Text = dgvEmpleados.Rows[e.RowIndex].Cells["ID_Cargo"].FormattedValue.ToString();
-                //dtpFContrato.Value = dgvEmpleados.Rows[e.RowIndex].Cells["Fecha_Contrato"];
+                dtpFContrato.Value = Convert.ToDateTime(dgvEmpleados.Rows[e.RowIndex].Cells["Fecha_Contrato"].Value);
                 chkActivo.Checked = false;
                 if (dgvEmpleados.Rows[e.RowIndex].Cells["Activo"].FormattedValue.ToString() == "True")
                     chkActivo.Checked = true;

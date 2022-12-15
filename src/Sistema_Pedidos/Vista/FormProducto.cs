@@ -377,14 +377,20 @@ namespace Sistema_Pedidos
         {
             if (e.RowIndex > -1 && e.ColumnIndex > -1 && dgvProductos.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
+                var indiceMarca = Convert.ToInt32(dgvProductos.Rows[e.RowIndex].Cells["ID_Marca"].Value);
+                var indiceModelo = Convert.ToInt32(dgvProductos.Rows[e.RowIndex].Cells["ID_Modelo"].Value);
+                var indiceProveedor = Convert.ToInt32(dgvProductos.Rows[e.RowIndex].Cells["ID_Proveedor"].Value);
                 dgvProductos.CurrentRow.Selected = true;
                 txtId.Text = dgvProductos.Rows[e.RowIndex].Cells["ID_Producto"].FormattedValue.ToString();
                 txtNombre.Text = dgvProductos.Rows[e.RowIndex].Cells["Nombre_Producto"].FormattedValue.ToString();
                 txtDescripcion.Text = dgvProductos.Rows[e.RowIndex].Cells["Descripcion"].FormattedValue.ToString();
                 txtPrecioVenta.Text = dgvProductos.Rows[e.RowIndex].Cells["Precio_Venta"].FormattedValue.ToString();
-                txtIdMarca.Text = dgvProductos.Rows[e.RowIndex].Cells["ID_Marca"].FormattedValue.ToString();
-                txtIdModelo.Text = dgvProductos.Rows[e.RowIndex].Cells["ID_Modelo"].FormattedValue.ToString();
-                txtIdProveedor.Text = dgvProductos.Rows[e.RowIndex].Cells["ID_Proveedor"].FormattedValue.ToString();
+                txtIdMarca.Text = indiceMarca.ToString();
+                txtIdModelo.Text = indiceModelo.ToString();
+                txtIdProveedor.Text = indiceProveedor.ToString();
+                cmbMarca.SelectedValue = indiceMarca;
+                cmbModelo.SelectedValue = indiceModelo;
+                cmbProveedor.SelectedValue = indiceProveedor;
                 txtStock.Text = dgvProductos.Rows[e.RowIndex].Cells["Stock"].FormattedValue.ToString();
                 chkActivo.Checked = false;
                 if (dgvProductos.Rows[e.RowIndex].Cells["Activo"].FormattedValue.ToString() == "True")
