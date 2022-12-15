@@ -75,10 +75,12 @@ namespace Sistema_Pedidos
 
                     bd.SaveChanges();
                 }
+
+                MessageBox.Show("Pedido grabado exitosamente.", "Nuevo Pedido", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception)
             {
-
+                MessageBox.Show("No se pudo grabar el pedido", "Nuevo Pedido", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw;
             }
         }
