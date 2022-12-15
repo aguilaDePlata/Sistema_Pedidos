@@ -76,7 +76,7 @@ namespace Sistema_Pedidos
                     bd.SaveChanges();
                 }
 
-                MessageBox.Show("Pedido grabado exitosamente.", "Nuevo Pedido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Pedido grabado exitosamente.", "Nuevo Pedido ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception)
             {
