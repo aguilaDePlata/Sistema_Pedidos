@@ -34,6 +34,7 @@ namespace Sistema_Pedidos
             this.btnSalir = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.dtpFechaEntrega = new System.Windows.Forms.DateTimePicker();
             this.dtpFechaPedido = new System.Windows.Forms.DateTimePicker();
             this.txtNombreCliente = new System.Windows.Forms.TextBox();
@@ -43,6 +44,7 @@ namespace Sistema_Pedidos
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnBuscarProducto = new System.Windows.Forms.Button();
             this.dgvDetallePedido = new System.Windows.Forms.DataGridView();
             this.txtProducto = new System.Windows.Forms.TextBox();
             this.txtTotal = new System.Windows.Forms.TextBox();
@@ -54,8 +56,6 @@ namespace Sistema_Pedidos
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnBuscarCliente = new System.Windows.Forms.Button();
-            this.btnBuscarProducto = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetallePedido)).BeginInit();
@@ -110,23 +110,34 @@ namespace Sistema_Pedidos
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(17, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(644, 89);
+            this.groupBox1.Size = new System.Drawing.Size(657, 89);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cliente";
             // 
+            // btnBuscarCliente
+            // 
+            this.btnBuscarCliente.Location = new System.Drawing.Point(208, 19);
+            this.btnBuscarCliente.Name = "btnBuscarCliente";
+            this.btnBuscarCliente.Size = new System.Drawing.Size(29, 23);
+            this.btnBuscarCliente.TabIndex = 8;
+            this.btnBuscarCliente.Text = "...";
+            this.btnBuscarCliente.UseVisualStyleBackColor = true;
+            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
+            // 
             // dtpFechaEntrega
             // 
-            this.dtpFechaEntrega.Location = new System.Drawing.Point(530, 52);
+            this.dtpFechaEntrega.Location = new System.Drawing.Point(526, 52);
             this.dtpFechaEntrega.Name = "dtpFechaEntrega";
-            this.dtpFechaEntrega.Size = new System.Drawing.Size(98, 20);
+            this.dtpFechaEntrega.Size = new System.Drawing.Size(119, 20);
             this.dtpFechaEntrega.TabIndex = 4;
             // 
             // dtpFechaPedido
             // 
-            this.dtpFechaPedido.Location = new System.Drawing.Point(530, 24);
+            this.dtpFechaPedido.Enabled = false;
+            this.dtpFechaPedido.Location = new System.Drawing.Point(526, 24);
             this.dtpFechaPedido.Name = "dtpFechaPedido";
-            this.dtpFechaPedido.Size = new System.Drawing.Size(98, 20);
+            this.dtpFechaPedido.Size = new System.Drawing.Size(119, 20);
             this.dtpFechaPedido.TabIndex = 3;
             // 
             // txtNombreCliente
@@ -195,17 +206,27 @@ namespace Sistema_Pedidos
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(17, 107);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(644, 272);
+            this.groupBox2.Size = new System.Drawing.Size(657, 272);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
+            // 
+            // btnBuscarProducto
+            // 
+            this.btnBuscarProducto.Location = new System.Drawing.Point(103, 32);
+            this.btnBuscarProducto.Name = "btnBuscarProducto";
+            this.btnBuscarProducto.Size = new System.Drawing.Size(29, 23);
+            this.btnBuscarProducto.TabIndex = 8;
+            this.btnBuscarProducto.Text = "...";
+            this.btnBuscarProducto.UseVisualStyleBackColor = true;
+            this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
             // 
             // dgvDetallePedido
             // 
             this.dgvDetallePedido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDetallePedido.Location = new System.Drawing.Point(-2, 60);
+            this.dgvDetallePedido.Location = new System.Drawing.Point(8, 60);
             this.dgvDetallePedido.Name = "dgvDetallePedido";
             this.dgvDetallePedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDetallePedido.Size = new System.Drawing.Size(638, 168);
+            this.dgvDetallePedido.Size = new System.Drawing.Size(641, 168);
             this.dgvDetallePedido.TabIndex = 9;
             // 
             // txtProducto
@@ -213,12 +234,12 @@ namespace Sistema_Pedidos
             this.txtProducto.Location = new System.Drawing.Point(138, 34);
             this.txtProducto.Name = "txtProducto";
             this.txtProducto.ReadOnly = true;
-            this.txtProducto.Size = new System.Drawing.Size(283, 20);
+            this.txtProducto.Size = new System.Drawing.Size(296, 20);
             this.txtProducto.TabIndex = 6;
             // 
             // txtTotal
             // 
-            this.txtTotal.Location = new System.Drawing.Point(535, 234);
+            this.txtTotal.Location = new System.Drawing.Point(549, 234);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(100, 20);
@@ -228,7 +249,7 @@ namespace Sistema_Pedidos
             // 
             // txtCantidad
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(536, 34);
+            this.txtCantidad.Location = new System.Drawing.Point(549, 34);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(100, 20);
             this.txtCantidad.TabIndex = 8;
@@ -237,7 +258,7 @@ namespace Sistema_Pedidos
             // 
             // txtPrecio
             // 
-            this.txtPrecio.Location = new System.Drawing.Point(427, 34);
+            this.txtPrecio.Location = new System.Drawing.Point(440, 34);
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.ReadOnly = true;
             this.txtPrecio.Size = new System.Drawing.Size(100, 20);
@@ -247,15 +268,15 @@ namespace Sistema_Pedidos
             // 
             // txtProductoId
             // 
-            this.txtProductoId.Location = new System.Drawing.Point(3, 34);
+            this.txtProductoId.Location = new System.Drawing.Point(8, 34);
             this.txtProductoId.Name = "txtProductoId";
-            this.txtProductoId.Size = new System.Drawing.Size(100, 20);
+            this.txtProductoId.Size = new System.Drawing.Size(95, 20);
             this.txtProductoId.TabIndex = 5;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(495, 237);
+            this.label10.Location = new System.Drawing.Point(510, 237);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(31, 13);
             this.label10.TabIndex = 5;
@@ -264,7 +285,7 @@ namespace Sistema_Pedidos
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(533, 18);
+            this.label9.Location = new System.Drawing.Point(600, 18);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 13);
             this.label9.TabIndex = 6;
@@ -273,7 +294,7 @@ namespace Sistema_Pedidos
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(424, 18);
+            this.label8.Location = new System.Drawing.Point(503, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(37, 13);
             this.label8.TabIndex = 7;
@@ -291,31 +312,11 @@ namespace Sistema_Pedidos
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 18);
+            this.label6.Location = new System.Drawing.Point(6, 18);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(64, 13);
             this.label6.TabIndex = 9;
             this.label6.Text = "ID Producto";
-            // 
-            // btnBuscarCliente
-            // 
-            this.btnBuscarCliente.Location = new System.Drawing.Point(208, 19);
-            this.btnBuscarCliente.Name = "btnBuscarCliente";
-            this.btnBuscarCliente.Size = new System.Drawing.Size(29, 23);
-            this.btnBuscarCliente.TabIndex = 8;
-            this.btnBuscarCliente.Text = "...";
-            this.btnBuscarCliente.UseVisualStyleBackColor = true;
-            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
-            // 
-            // btnBuscarProducto
-            // 
-            this.btnBuscarProducto.Location = new System.Drawing.Point(103, 32);
-            this.btnBuscarProducto.Name = "btnBuscarProducto";
-            this.btnBuscarProducto.Size = new System.Drawing.Size(29, 23);
-            this.btnBuscarProducto.TabIndex = 8;
-            this.btnBuscarProducto.Text = "...";
-            this.btnBuscarProducto.UseVisualStyleBackColor = true;
-            this.btnBuscarProducto.Click += new System.EventHandler(this.btnBuscarProducto_Click);
             // 
             // frmPedido
             // 

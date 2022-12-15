@@ -94,9 +94,12 @@ namespace Sistema_Pedidos
                     bd.Cargo.Add(pCargo);
                     bd.SaveChanges();
                 }
+
+                MessageBox.Show("");    
             }
             catch (Exception)
             {
+                MessageBox.Show("");
                 throw;
             }
         }

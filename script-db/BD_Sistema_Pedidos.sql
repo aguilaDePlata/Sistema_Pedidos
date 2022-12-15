@@ -44,11 +44,14 @@ WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW
 GO
 
 CREATE TABLE [Detalle_Pedido] (
+  [ID_Detalle] int IDENTITY(1,1) NOT NULL,
   [ID_Pedido] int NULL,
   [ID_Producto] int NULL,
   [Cantidad] int NULL,
   [Precio_Venta] decimal(10,2) NULL,
-  [Subtotal_Prod] decimal(10,2) NULL
+  [Subtotal_Prod] decimal(10,2) NULL,
+  PRIMARY KEY CLUSTERED ([ID_Detalle])
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 )
 GO
 
