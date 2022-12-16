@@ -12,7 +12,6 @@ namespace Sistema_Pedidos.Vista
 {
     public partial class frmLogin : Form
     {
-        private const string msgUsuarioInvalido = "Usuario o Contraseña Incorrecto.";
         private int contadorIntentosLogin = 0;
 
         public frmLogin()
@@ -22,29 +21,55 @@ namespace Sistema_Pedidos.Vista
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            if (txtUsuario.Text.ToUpper().Trim() == "VENDEDOR" && 
-                txtContraseña.Text.ToUpper().Trim() == "1234")
+            try
             {
-                MessageBox.Show("Bienvenido!", 
-                    "Inicio de Sesión", 
-                    MessageBoxButtons.OK, 
+                if(string.IsNullOrEmpty(txtUsuario.Text))
+                    throw new ArgumentException("Usuario no puede ser nulo o vacio.");
+
+                if (string.IsNullOrEmpty(txtContraseña.Text))
+                    throw new ArgumentException("Contraseña no puede ser nulo o vacio.");
+
+                var usuario = ConsultarUsuario(txtUsuario.Text, txtContraseña.Text);
+                if (usuario == null)
+                    throw new ArgumentException("Usuario no existe.");
+
+                MessageBox.Show("Bienvenido!",
+                    "Inicio de Sesión",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
                 IniciarAplicacion();
             }
-            else
+            catch (Exception ex)
             {
                 contadorIntentosLogin++;
 
-                MessageBox.Show(msgUsuarioInvalido + " " + (contadorIntentosLogin == 3 ? "Se alcanzo el limite de intentos." : string.Empty),
+                MessageBox.Show(ex.Message + " " + (contadorIntentosLogin == 3 ? "\nSe alcanzo el limite de intentos." : string.Empty),
                     "Inicio de Sesión",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
-                if (contadorIntentosLogin  == 3)
+                if (contadorIntentosLogin == 3)
                 {
                     CerrarAplicacion();
                 }
+            }
+        }
+
+        private UsuarioDto ConsultarUsuario(string usuario, string password)
+        {
+            using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
+            {
+                var productoBuscado = (from u in bd.Usuario
+                                       where u.Usuario1.ToUpper().Trim() == usuario.ToUpper().Trim() && 
+                                                u.Password.Trim() == password.Trim()
+                                       select new UsuarioDto
+                                       {
+                                           ID_Empleado = u.ID_Empleado,
+                                           ID_Usuario = u.ID_Usuario,
+                                       }).FirstOrDefault();
+
+                return productoBuscado;
             }
         }
 

@@ -63,6 +63,10 @@
     <Compile Include="Cargo.cs">
       <DependentUpon>Model_Pedidos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modelo\UsuarioDto.cs" />
+    <Compile Include="Usuario.cs">
+      <DependentUpon>Model_Pedidos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Vista\FormCargo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,9 +191,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedor.cs">
-      <DependentUpon>Model_Pedidos.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagrams.cs">
       <DependentUpon>Model_Pedidos.tt</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">

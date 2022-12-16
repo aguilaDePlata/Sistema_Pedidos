@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="C3_BD_PEDIDOS_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="C3_BD_PEDIDOS_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cargo">
           <Key>
             <PropertyRef Name="ID_Cargo" />
@@ -119,15 +119,14 @@
           <Property Name="Telefono" Type="nvarchar" MaxLength="20" />
           <Property Name="Activo" Type="bit" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="Usuario">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="ID_Usuario" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="ID_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Empleado" Type="int" />
+          <Property Name="Usuario" Type="varchar" MaxLength="90" />
+          <Property Name="Password" Type="varchar" MaxLength="90" />
         </EntityType>
         <Association Name="FK_Comprobante_Pedido">
           <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
@@ -248,7 +247,7 @@
           <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Comprobante_Pedido" Association="Self.FK_Comprobante_Pedido">
             <End Role="Pedido" EntitySet="Pedido" />
             <End Role="Comprobante" EntitySet="Comprobante" />
@@ -286,8 +285,7 @@
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="C3_BD_PEDIDOS_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -423,16 +421,6 @@
           <Property Name="Activo" Type="Boolean" />
           <NavigationProperty Name="Producto" Relationship="Self.FK_Producto_Proveedor" FromRole="Proveedor" ToRole="Producto" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <Association Name="FK_Empleado_Cargo">
           <End Role="Cargo" Type="Self.Cargo" Multiplicity="0..1" />
           <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
@@ -552,7 +540,6 @@
           <EntitySet Name="Pedido" EntityType="Self.Pedido" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <AssociationSet Name="FK_Empleado_Cargo" Association="Self.FK_Empleado_Cargo">
             <End Role="Cargo" EntitySet="Cargo" />
             <End Role="Empleado" EntitySet="Empleado" />
@@ -589,7 +576,17 @@
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
+          <EntitySet Name="Usuario" EntityType="C3_BD_PEDIDOS_Model.Usuario" />
         </EntityContainer>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Empleado" Type="Int32" />
+          <Property Name="Usuario1" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -720,14 +717,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="C3_BD_PEDIDOS_Model.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="C3_BD_PEDIDOS_Model.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
+                <ScalarProperty Name="ID_Empleado" ColumnName="ID_Empleado" />
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

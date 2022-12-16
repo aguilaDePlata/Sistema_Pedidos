@@ -148,3 +148,10 @@ GO
 ALTER TABLE [Producto] ADD CONSTRAINT [FK_Producto_Proveedor] FOREIGN KEY ([ID_Proveedor]) REFERENCES [Proveedor] ([ID_Proveedor])
 GO
 
+create table Usuario
+(
+	ID_Usuario int identity(1, 1) primary key,
+	ID_Empleado int,
+	Usuario varchar(90),
+	Password  varchar(90)
+)

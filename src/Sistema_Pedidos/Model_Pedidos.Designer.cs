@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'C:\Gian\IDAT\CICLO 3\Proyecto Grupal\Herramientas de Programacion\Final\Sistema_Pedidos\Sistema_Pedidos\Model_Pedidos.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\rulic\Source\Repos\Sistema_Pedidos\src\Sistema_Pedidos\Model_Pedidos.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.

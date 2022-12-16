@@ -63,6 +63,10 @@ INSERT INTO Comprobante VALUES(2,'Boleta','13/06/2022',21.50,0,0,21.50)
 INSERT INTO Comprobante VALUES(3,'Boleta','23/08/2022',18.00,0,0,18.00)
 INSERT INTO Comprobante VALUES(4,'Boleta','15/06/2022',44.00,0,0,44.00)
 GO
+go
+INSERT INTO Usuario (ID_Empleado, Usuario, Password) VALUES (1, 'mAguirre', '1234')
+INSERT INTO Usuario (ID_Empleado, Usuario, Password) VALUES (2, 'dCondori', '1234')
+
 
 --Comprobacion de Datos insertados
 SELECT * FROM Cargo
