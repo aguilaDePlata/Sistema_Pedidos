@@ -15,10 +15,11 @@ namespace Sistema_Pedidos
 
         public int Id_Pedido { get; set; }
         public int Id_Cliente { get; set; }
+        public string NombreCliente { get; set; }
         public int Id_Empleado { get; set; }
-        public DateTime Fecha_Pedido { get; set; }
-        public DateTime Fecha_MaxEntrega { get; set; }
-        public decimal Valor_Total { get; set; }
+        public DateTime? Fecha_Pedido { get; set; }
+        public DateTime? Fecha_MaxEntrega { get; set; }
+        public decimal? Valor_Total { get; set; }
         public Nullable<bool> Activo { get; set; }
 
         public List<Detalle_PedidoDto> PedidoDetalles { get; set; }       

@@ -30,50 +30,17 @@ namespace Sistema_Pedidos
 
         private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(txtClienteId.Text))
-                    throw new ArgumentException("El codigo del cliente no puede ser nulo o vacio.");
-
-                var cliente = ConsultarCliente(Convert.ToInt32(txtClienteId.Text));
-                if(cliente == null)
-                    throw new ArgumentException("El cliente no existe.");
-
-                nuevoPedido.Id_Cliente = cliente.Id_Cliente;
-
-                txtNombreCliente.Text = cliente.NombreCompleto;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                      "Nuevo Pedido",
-                      MessageBoxButtons.OK,
-                      MessageBoxIcon.Error);
-            }
+            BuscarCliente();
         }
+
+
 
         private void btnBuscarProducto_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(txtProductoId.Text))
-                    throw new ArgumentException("El codigo del Producto no puede ser nulo o vacio.");
-
-                var producto = ConsultarProducto(Convert.ToInt32(txtProductoId.Text));
-                if(producto == null)
-                    throw new ArgumentException("El producto no existe.");
-                txtProducto.Text = producto.Descripcion;
-                txtPrecio.Text = producto.Precio_Venta.ToString();
-                txtCantidad.Focus();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message,
-                       "Nuevo Pedido",
-                       MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
-            }
+            BuscarProducto();
         }
+
+
 
         private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -86,6 +53,11 @@ namespace Sistema_Pedidos
                     if(string.IsNullOrEmpty(txtProducto.Text))
                         throw new ArgumentException(" Seleccione un producto.");
 
+                    if (string.IsNullOrEmpty(txtCantidad.Text))
+                        throw new ArgumentException("Ingrese una cantidad valida.");
+
+                    if (Convert.ToInt32(txtCantidad.Text) <= 0)
+                        throw new ArgumentException("La cantidad minina de un item es 1.");
 
                     nuevoPedido.PedidoDetalles.Add(new Detalle_PedidoDto()
                     {
@@ -116,11 +88,15 @@ namespace Sistema_Pedidos
             nuevoPedido.Fecha_MaxEntrega = dtpFechaEntrega.Value;
             try
             {
-                if(!nuevoPedido.PedidoDetalles.Any())
-                    throw new ArgumentException(" Minimo insertar un producto para el pedido.");
+                if(string.IsNullOrEmpty(txtNombreCliente.Text))
+                    throw new ArgumentException("Debe seleccionar un cliente.");
 
+                if (!nuevoPedido.PedidoDetalles.Any())
+                    throw new ArgumentException("Minimo insertar un producto para el pedido.");
 
                 this.AgregarPedido(nuevoPedido);
+
+                LimpiarControles();
 
                 MessageBox.Show("Pedido grabado exitosamente.", 
                     "Nuevo Pedido ", 
@@ -139,11 +115,79 @@ namespace Sistema_Pedidos
         private void txtClienteId_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = NoEsDigito(e);
+
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                BuscarCliente();
+            }
         }
 
         private void txtProductoId_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = NoEsDigito(e);
+
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                BuscarProducto();
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarControles();
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BuscarCliente()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txtClienteId.Text))
+                    throw new ArgumentException("El codigo del cliente no puede ser nulo o vacio.");
+
+                var cliente = ConsultarCliente(Convert.ToInt32(txtClienteId.Text));
+                if (cliente == null)
+                    throw new ArgumentException("El cliente no existe.");
+
+                nuevoPedido.Id_Cliente = cliente.Id_Cliente;
+
+                txtNombreCliente.Text = cliente.NombreCompleto;
+                dtpFechaEntrega.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                      "Nuevo Pedido",
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Error);
+            }
+        }
+
+        private void BuscarProducto()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txtProductoId.Text))
+                    throw new ArgumentException("El codigo del Producto no puede ser nulo o vacio.");
+
+                var producto = ConsultarProducto(Convert.ToInt32(txtProductoId.Text));
+                if (producto == null)
+                    throw new ArgumentException("El producto no existe.");
+                txtProducto.Text = producto.Descripcion;
+                txtPrecio.Text = producto.Precio_Venta.ToString();
+                txtCantidad.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                       "Nuevo Pedido",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
+            }
         }
 
         private Pedido MaterializarPedidoDesdeDto(PedidoDto pedidoDto)
@@ -210,7 +254,6 @@ namespace Sistema_Pedidos
             using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
             {
                 bd.Pedido.Add(MaterializarPedidoDesdeDto(nuevoPedido));
-
                 bd.SaveChanges();
             }
         }
@@ -221,6 +264,7 @@ namespace Sistema_Pedidos
             dgvDetallePedido.DataSource = nuevoPedido.PedidoDetalles;
 
             this.dgvDetallePedido.Columns["ID_Pedido"].Visible = false;
+            this.dgvDetallePedido.Columns["Id_Detalle"].Visible = false;
             this.dgvDetallePedido.Columns["ID_Producto"].Width = 30;
             this.dgvDetallePedido.Columns["Producto"].Width = 350;
             this.dgvDetallePedido.Columns["Cantidad"].Width = 50;
@@ -230,6 +274,7 @@ namespace Sistema_Pedidos
             this.dgvDetallePedido.Columns["ID_Producto"].HeaderText = "Id";
             this.dgvDetallePedido.Columns["Precio_Venta"].HeaderText = "Precio";
             this.dgvDetallePedido.Columns["Subtotal_Prod"].HeaderText = "SubTotal";
+
 
             txtTotal.Text = Convert.ToString(nuevoPedido.Valor_Total);
         }
@@ -249,7 +294,7 @@ namespace Sistema_Pedidos
             dtpFechaPedido.CustomFormat = "dd/MM/yyyy";
             dtpFechaEntrega.CustomFormat = "dd/MM/yyyy";
             dtpFechaPedido.Value = DateTime.Now;
-            dtpFechaEntrega.Value = DateTime.Now;
+            dtpFechaEntrega.Value = DateTime.Now.AddDays(5);
         }
 
         private bool NoEsDigito(KeyPressEventArgs e)
@@ -263,6 +308,19 @@ namespace Sistema_Pedidos
             return noEsDigito;
         }
 
+        private void LimpiarControles()
+        {
+            txtClienteId.Text = string.Empty;
+            txtNombreCliente.Text = string.Empty;
+            dtpFechaEntrega.Value = DateTime.Now.AddDays(5);
+            txtProductoId.Text = string.Empty;
+            txtProducto.Text = string.Empty;
+            txtPrecio.Text = "0.00";
+            txtCantidad.Text = string.Empty;
+            dgvDetallePedido.DataSource = null;
+            txtTotal.Text = "0.00";
 
+            txtClienteId.Focus();
+        }
     }
 }
