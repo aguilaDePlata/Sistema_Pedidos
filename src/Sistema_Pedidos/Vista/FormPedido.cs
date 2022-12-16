@@ -30,36 +30,83 @@ namespace Sistema_Pedidos
 
         private void btnBuscarCliente_Click(object sender, EventArgs e)
         {
-            var cliente = ConsultarCliente(Convert.ToInt32(txtClienteId.Text));
-            nuevoPedido.Id_Cliente = cliente.Id_Cliente;
+            try
+            {
+                if (string.IsNullOrEmpty(txtClienteId.Text))
+                    throw new ArgumentException("El codigo del cliente no puede ser nulo o vacio.");
 
-            txtNombreCliente.Text = cliente.NombreCompleto;
+                var cliente = ConsultarCliente(Convert.ToInt32(txtClienteId.Text));
+                if(cliente == null)
+                    throw new ArgumentException("El cliente no existe.");
+
+                nuevoPedido.Id_Cliente = cliente.Id_Cliente;
+
+                txtNombreCliente.Text = cliente.NombreCompleto;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                      "Nuevo Pedido",
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Error);
+            }
         }
 
         private void btnBuscarProducto_Click(object sender, EventArgs e)
         {
-            var producto = ConsultarProducto(Convert.ToInt32(txtProductoId.Text));
-            txtProducto.Text = producto.Descripcion;
-            txtPrecio.Text = producto.Precio_Venta.ToString();
-            txtCantidad.Focus();
+            try
+            {
+                if (string.IsNullOrEmpty(txtProductoId.Text))
+                    throw new ArgumentException("El codigo del Producto no puede ser nulo o vacio.");
+
+                var producto = ConsultarProducto(Convert.ToInt32(txtProductoId.Text));
+                if(producto == null)
+                    throw new ArgumentException("El producto no existe.");
+                txtProducto.Text = producto.Descripcion;
+                txtPrecio.Text = producto.Precio_Venta.ToString();
+                txtCantidad.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                       "Nuevo Pedido",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
+            }
         }
 
         private void txtCantidad_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            try
             {
-                nuevoPedido.PedidoDetalles.Add(new Detalle_PedidoDto()
-                {
-                    Id_Producto = Convert.ToInt32(txtProductoId.Text),
-                    Producto = txtProducto.Text,
-                    Precio_Venta = Convert.ToDecimal(txtPrecio.Text),
-                    Cantidad = Convert.ToInt32(txtCantidad.Text),
-                    Subtotal_Prod = Convert.ToDecimal(txtPrecio.Text) * Convert.ToInt32(txtCantidad.Text),
-                });
-                nuevoPedido.Valor_Total = nuevoPedido.PedidoDetalles.Sum(t => t.Subtotal_Prod);
+                e.Handled = NoEsDigito(e);
 
-                MostrarGridDetallesPedidoYTotal();
-                LimpiarControlesAgregaDetallePedido();
+                if (e.KeyChar == (char)Keys.Enter)
+                {
+                    if(string.IsNullOrEmpty(txtProducto.Text))
+                        throw new ArgumentException(" Seleccione un producto.");
+
+
+                    nuevoPedido.PedidoDetalles.Add(new Detalle_PedidoDto()
+                    {
+                        Id_Producto = Convert.ToInt32(txtProductoId.Text),
+                        Producto = txtProducto.Text,
+                        Precio_Venta = Convert.ToDecimal(txtPrecio.Text),
+                        Cantidad = Convert.ToInt32(txtCantidad.Text),
+                        Subtotal_Prod = Convert.ToDecimal(txtPrecio.Text) * Convert.ToInt32(txtCantidad.Text),
+                    });
+                    nuevoPedido.Valor_Total = nuevoPedido.PedidoDetalles.Sum(t => t.Subtotal_Prod);
+
+                    MostrarGridDetallesPedidoYTotal();
+                    LimpiarControlesAgregaDetallePedido();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,
+                    "Nuevo Pedido",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -69,20 +116,34 @@ namespace Sistema_Pedidos
             nuevoPedido.Fecha_MaxEntrega = dtpFechaEntrega.Value;
             try
             {
-                using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
-                {
-                    bd.Pedido.Add(MaterializarPedidoDesdeDto(nuevoPedido));
+                if(!nuevoPedido.PedidoDetalles.Any())
+                    throw new ArgumentException(" Minimo insertar un producto para el pedido.");
 
-                    bd.SaveChanges();
-                }
 
-                MessageBox.Show("Pedido grabado exitosamente.", "Nuevo Pedido ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.AgregarPedido(nuevoPedido);
+
+                MessageBox.Show("Pedido grabado exitosamente.", 
+                    "Nuevo Pedido ", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("No se pudo grabar el pedido", "Nuevo Pedido", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
+                MessageBox.Show(ex.Message, 
+                    "Nuevo Pedido", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
+        }
+
+        private void txtClienteId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = NoEsDigito(e);
+        }
+
+        private void txtProductoId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = NoEsDigito(e);
         }
 
         private Pedido MaterializarPedidoDesdeDto(PedidoDto pedidoDto)
@@ -113,48 +174,44 @@ namespace Sistema_Pedidos
 
         private ClienteDto ConsultarCliente(int clienteId)
         {
-            try
+            using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
             {
-                using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
-                {
-                    var clienteBuscado = (from c in bd.Cliente
-                                          where c.ID_Cliente == clienteId
-                                          select new ClienteDto
-                                          {
-                                              Id_Cliente = c.ID_Cliente,
-                                              NombreCompleto = c.Nombre + " " + c.Apellidos
-                                          }).FirstOrDefault();
+                var clienteBuscado = (from c in bd.Cliente
+                                      where c.ID_Cliente == clienteId
+                                      select new ClienteDto
+                                      {
+                                          Id_Cliente = c.ID_Cliente,
+                                          NombreCompleto = c.Nombre + " " + c.Apellidos
+                                      }).FirstOrDefault();
 
-                    return clienteBuscado;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                return clienteBuscado;
             }
         }
 
         private ProductoDto ConsultarProducto(int productoId)
         {
-            try
+            using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
             {
-                using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
-                {
-                    var productoBuscado = (from p in bd.Producto
-                                           where p.ID_Producto == productoId
-                                           select new ProductoDto
-                                           {
-                                               Id_Producto = p.ID_Producto,
-                                               Descripcion = p.Descripcion,
-                                               Precio_Venta = p.Precio_Venta.ToString(),
-                                           }).FirstOrDefault();
+                var productoBuscado = (from p in bd.Producto
+                                       where p.ID_Producto == productoId
+                                       select new ProductoDto
+                                       {
+                                           Id_Producto = p.ID_Producto,
+                                           Descripcion = p.Descripcion,
+                                           Precio_Venta = p.Precio_Venta.ToString(),
+                                       }).FirstOrDefault();
 
-                    return productoBuscado;
-                }
+                return productoBuscado;
             }
-            catch (Exception)
+        }
+
+        private void AgregarPedido(PedidoDto pedidoDto)
+        {
+            using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
             {
-                throw;
+                bd.Pedido.Add(MaterializarPedidoDesdeDto(nuevoPedido));
+
+                bd.SaveChanges();
             }
         }
 
@@ -194,5 +251,18 @@ namespace Sistema_Pedidos
             dtpFechaPedido.Value = DateTime.Now;
             dtpFechaEntrega.Value = DateTime.Now;
         }
+
+        private bool NoEsDigito(KeyPressEventArgs e)
+        {
+            bool noEsDigito = false;
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                noEsDigito = true;
+            }
+
+            return noEsDigito;
+        }
+
+
     }
 }
