@@ -193,6 +193,7 @@
     <Compile Include="Proveedor.cs">
       <DependentUpon>Model_Pedidos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Vista\HelperValidaciones.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -12,6 +12,7 @@ namespace Sistema_Pedidos.Vista
 {
     public partial class frmLogin : Form
     {
+        private UsuarioDto usuario;
         private int contadorIntentosLogin = 0;
 
         public frmLogin()
@@ -29,7 +30,7 @@ namespace Sistema_Pedidos.Vista
                 if (string.IsNullOrEmpty(txtContraseña.Text))
                     throw new ArgumentException("Contraseña no puede ser nulo o vacio.");
 
-                var usuario = ConsultarUsuario(txtUsuario.Text, txtContraseña.Text);
+                usuario = ConsultarUsuario(txtUsuario.Text, txtContraseña.Text);
                 if (usuario == null)
                     throw new ArgumentException("Usuario no existe.");
 
@@ -61,12 +62,15 @@ namespace Sistema_Pedidos.Vista
             using (C3_BD_PEDIDOS_Entities bd = new C3_BD_PEDIDOS_Entities())
             {
                 var productoBuscado = (from u in bd.Usuario
+                                       join e in bd.Empleado on u.ID_Empleado equals e.ID_Empleado
                                        where u.Usuario1.ToUpper().Trim() == usuario.ToUpper().Trim() && 
                                                 u.Password.Trim() == password.Trim()
                                        select new UsuarioDto
                                        {
                                            ID_Empleado = u.ID_Empleado,
                                            ID_Usuario = u.ID_Usuario,
+                                           Nombres = e.Nombres, 
+                                           Apellidos = e.Apellidos
                                        }).FirstOrDefault();
 
                 return productoBuscado;
@@ -75,7 +79,11 @@ namespace Sistema_Pedidos.Vista
 
         private void IniciarAplicacion()
         {
-            frmPrincipal frmMain = new frmPrincipal();
+            frmPrincipal frmMain = new frmPrincipal(new EmpleadoDto { 
+                Id_Empleado = usuario.ID_Empleado, 
+                Nombres = usuario.Nombres, 
+                Apellidos = usuario.Apellidos, 
+            });
             frmMain.Show();
             this.Hide();
         }
@@ -83,6 +91,7 @@ namespace Sistema_Pedidos.Vista
         private void CerrarAplicacion()
         {
             this.Close();
+            Application.Exit();
         }
     }
 }

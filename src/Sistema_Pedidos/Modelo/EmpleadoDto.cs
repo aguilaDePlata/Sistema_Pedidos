@@ -8,7 +8,7 @@ namespace Sistema_Pedidos
 {
     public class EmpleadoDto
     {
-        public int Id_Empleado { get; set; }
+        public int? Id_Empleado { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public int Dni { get; set; }

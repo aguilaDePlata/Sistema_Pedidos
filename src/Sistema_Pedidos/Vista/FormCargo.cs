@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sistema_Pedidos.Vista;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -246,6 +247,11 @@ namespace Sistema_Pedidos
             {
                 MessageBox.Show("Debe seleccionar el registro que desea eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void txtSueldo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = HelperValidaciones.NoEsParteNumeroDecimal(sender, e);
         }
     }
 }

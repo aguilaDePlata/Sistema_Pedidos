@@ -13,16 +13,19 @@ namespace Sistema_Pedidos
     public partial class frmPedido : Form
     {
         private PedidoDto nuevoPedido;
+        private EmpleadoDto empleadoLogueado;
 
-        public frmPedido()
+        public frmPedido(EmpleadoDto empleadoLogueadoDto)
         {
             InitializeComponent();
+
+            this.empleadoLogueado = empleadoLogueadoDto;
         }
 
         private void frmPedido_Load(object sender, EventArgs e)
         {
             nuevoPedido = new PedidoDto();
-            nuevoPedido.Id_Empleado = 1;
+            nuevoPedido.Id_Empleado = (int)empleadoLogueado.Id_Empleado;
             nuevoPedido.Activo = true;
 
             InicializaControles();
@@ -295,6 +298,8 @@ namespace Sistema_Pedidos
             dtpFechaEntrega.CustomFormat = "dd/MM/yyyy";
             dtpFechaPedido.Value = DateTime.Now;
             dtpFechaEntrega.Value = DateTime.Now.AddDays(5);
+
+            tstLblEmpleado.Text = empleadoLogueado.Nombres + " " + empleadoLogueado.Apellidos;
         }
 
         private bool NoEsDigito(KeyPressEventArgs e)
@@ -322,5 +327,7 @@ namespace Sistema_Pedidos
 
             txtClienteId.Focus();
         }
+
+
     }
 }

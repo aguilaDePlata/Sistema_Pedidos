@@ -30,6 +30,8 @@ namespace Sistema_Pedidos
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtSueldo = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.txtCargo = new System.Windows.Forms.TextBox();
@@ -39,8 +41,6 @@ namespace Sistema_Pedidos
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnNuevo = new System.Windows.Forms.Button();
             this.dgvCargos = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtSueldo = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargos)).BeginInit();
@@ -56,21 +56,35 @@ namespace Sistema_Pedidos
             this.groupBox2.Controls.Add(this.txtId);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(466, 14);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(350, 11);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(271, 287);
+            this.groupBox2.Size = new System.Drawing.Size(203, 233);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos";
             // 
+            // txtSueldo
+            // 
+            this.txtSueldo.Location = new System.Drawing.Point(65, 71);
+            this.txtSueldo.Name = "txtSueldo";
+            this.txtSueldo.Size = new System.Drawing.Size(130, 20);
+            this.txtSueldo.TabIndex = 15;
+            this.txtSueldo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSueldo_KeyPress);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 71);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(43, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Sueldo:";
+            // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(159, 238);
-            this.btnGuardar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnGuardar.Location = new System.Drawing.Point(119, 193);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(100, 28);
+            this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 13;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
@@ -78,10 +92,9 @@ namespace Sistema_Pedidos
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(51, 238);
-            this.btnEliminar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEliminar.Location = new System.Drawing.Point(38, 193);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(100, 28);
+            this.btnEliminar.Size = new System.Drawing.Size(75, 23);
             this.btnEliminar.TabIndex = 12;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
@@ -89,38 +102,34 @@ namespace Sistema_Pedidos
             // 
             // txtCargo
             // 
-            this.txtCargo.Location = new System.Drawing.Point(87, 54);
-            this.txtCargo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtCargo.Location = new System.Drawing.Point(65, 44);
             this.txtCargo.Name = "txtCargo";
-            this.txtCargo.Size = new System.Drawing.Size(172, 22);
+            this.txtCargo.Size = new System.Drawing.Size(130, 20);
             this.txtCargo.TabIndex = 7;
             // 
             // txtId
             // 
-            this.txtId.Location = new System.Drawing.Point(87, 22);
-            this.txtId.Margin = new System.Windows.Forms.Padding(4);
+            this.txtId.Location = new System.Drawing.Point(65, 18);
             this.txtId.Name = "txtId";
             this.txtId.ReadOnly = true;
-            this.txtId.Size = new System.Drawing.Size(71, 22);
+            this.txtId.Size = new System.Drawing.Size(54, 20);
             this.txtId.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 57);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(9, 46);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 17);
+            this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Cargo:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 25);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(9, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 17);
+            this.label1.Size = new System.Drawing.Size(19, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Id:";
             // 
@@ -128,21 +137,18 @@ namespace Sistema_Pedidos
             // 
             this.groupBox1.Controls.Add(this.btnNuevo);
             this.groupBox1.Controls.Add(this.dgvCargos);
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(10, 11);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(445, 288);
+            this.groupBox1.Size = new System.Drawing.Size(334, 234);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cargos";
             // 
             // btnNuevo
             // 
-            this.btnNuevo.Location = new System.Drawing.Point(333, 239);
-            this.btnNuevo.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNuevo.Location = new System.Drawing.Point(250, 194);
             this.btnNuevo.Name = "btnNuevo";
-            this.btnNuevo.Size = new System.Drawing.Size(100, 28);
+            this.btnNuevo.Size = new System.Drawing.Size(75, 23);
             this.btnNuevo.TabIndex = 1;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = true;
@@ -151,39 +157,21 @@ namespace Sistema_Pedidos
             // dgvCargos
             // 
             this.dgvCargos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCargos.Location = new System.Drawing.Point(8, 23);
-            this.dgvCargos.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvCargos.Location = new System.Drawing.Point(6, 19);
             this.dgvCargos.Name = "dgvCargos";
             this.dgvCargos.RowHeadersWidth = 51;
-            this.dgvCargos.Size = new System.Drawing.Size(425, 208);
+            this.dgvCargos.Size = new System.Drawing.Size(319, 169);
             this.dgvCargos.TabIndex = 0;
             this.dgvCargos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCargos_CellClick);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 87);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 17);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Sueldo:";
-            // 
-            // txtSueldo
-            // 
-            this.txtSueldo.Location = new System.Drawing.Point(87, 87);
-            this.txtSueldo.Margin = new System.Windows.Forms.Padding(4);
-            this.txtSueldo.Name = "txtSueldo";
-            this.txtSueldo.Size = new System.Drawing.Size(172, 22);
-            this.txtSueldo.TabIndex = 15;
-            // 
             // frmCargo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(747, 313);
+            this.ClientSize = new System.Drawing.Size(560, 254);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmCargo";
             this.Text = "Mantenimiento de Cargo";
             this.Load += new System.EventHandler(this.frmCargo_Load);

@@ -23,9 +23,13 @@ namespace Sistema_Pedidos
         private frmModelo fModelo;
         private frmDetallePedido fDetallePedido;
 
-        public frmPrincipal()
+        private EmpleadoDto empleadoDto;
+
+        public frmPrincipal(EmpleadoDto empleadoDto)
         {
             InitializeComponent();
+
+            this.empleadoDto = empleadoDto;
         }
 
         private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -203,7 +207,7 @@ namespace Sistema_Pedidos
         {
             if (fPedido == null)
             {
-                fPedido = new frmPedido();
+                fPedido = new frmPedido(this.empleadoDto);
                 fPedido.MdiParent = this;
                 fPedido.FormClosed += new FormClosedEventHandler(CerrarFormularioPedido);
                 fPedido.Show();
@@ -216,6 +220,11 @@ namespace Sistema_Pedidos
         void CerrarFormularioPedido(object sender, FormClosedEventArgs e)
         {
             fPedido = null;
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Sistema_Pedidos
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tstLblEmpleado = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.dtpFechaEntrega = new System.Windows.Forms.DateTimePicker();
@@ -56,6 +57,7 @@ namespace Sistema_Pedidos
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetallePedido)).BeginInit();
@@ -93,11 +95,18 @@ namespace Sistema_Pedidos
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tstLblEmpleado});
             this.statusStrip1.Location = new System.Drawing.Point(0, 414);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(686, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tstLblEmpleado
+            // 
+            this.tstLblEmpleado.Name = "tstLblEmpleado";
+            this.tstLblEmpleado.Size = new System.Drawing.Size(0, 17);
             // 
             // groupBox1
             // 
@@ -333,10 +342,12 @@ namespace Sistema_Pedidos
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAgregar);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmPedido";
             this.Text = "Mantenimiento de Pedido";
             this.Load += new System.EventHandler(this.frmPedido_Load);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -376,5 +387,6 @@ namespace Sistema_Pedidos
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnBuscarCliente;
         private System.Windows.Forms.Button btnBuscarProducto;
+        private System.Windows.Forms.ToolStripStatusLabel tstLblEmpleado;
     }
 }
